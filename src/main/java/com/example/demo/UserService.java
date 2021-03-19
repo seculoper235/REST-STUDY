@@ -9,6 +9,10 @@ public class UserService {
     UserRepository userRepository;
 
     public User findUserById(Integer id) {
+        return userRepository.findById(id).get();
+    }
+
+    public User getUserById(Integer id) {
         return userRepository.getOne(id);
     }
 

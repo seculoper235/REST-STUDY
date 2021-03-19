@@ -48,4 +48,11 @@ public class UserControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated());
     }
+
+    @Test
+    public void testSelectUser() throws Exception {
+        mockMvc.perform(get("/user/2"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 }

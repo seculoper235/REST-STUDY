@@ -19,18 +19,26 @@ public class UserController {
         return "<h1>Hello World!</h1>";
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/finduser/{id}")
     public ResponseEntity<User> findUser(@PathVariable Integer id) {
         User user = userService.findUserById(id);
 
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/getuser/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Integer id) {
+        User user = userService.getUserById(id);
+        String name = user.getName();
+        user.setName(name);
+        return ResponseEntity.ok(user);
+    }
+
     @PostMapping("/user")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User newuser = userService.createUser(user);
-        URI createUri = linkTo(methodOn(UserController.class).createUser(user)).slash(user.getId()).toUri();
+        URI createUri = linkTo(methodOn(UserController.class).createUser(newuser)).slash(user.getId()).toUri();
 
-        return ResponseEntity.created(createUri).body(user);
+        return ResponseEntity.created(createUri).body(newuser);
     }
 }
