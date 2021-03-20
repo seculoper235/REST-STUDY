@@ -2,6 +2,8 @@ package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -13,6 +15,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/")
     public String home() {
@@ -29,8 +33,7 @@ public class UserController {
     @GetMapping("/getuser/{id}")
     public ResponseEntity<User> getUser(@PathVariable Integer id) {
         User user = userService.getUserById(id);
-        String name = user.getName();
-        user.setName(name);
+        System.out.println("사용자 ID = " + user.getId() + "\n사용자 이름 = " + user.getName() + "\n사용자 설명 = " + user.getDescription());
         return ResponseEntity.ok(user);
     }
 
