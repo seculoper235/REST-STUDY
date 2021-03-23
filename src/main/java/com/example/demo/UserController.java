@@ -1,11 +1,15 @@
 package com.example.demo;
 
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -43,6 +47,20 @@ public class UserController {
         User user = userService.getUserById(id);
         System.out.println("사용자 ID = " + user.getId() + "\n사용자 이름 = " + user.getName() + "\n사용자 설명 = " + user.getDescription());
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/users")
+    public CollectionModel<EntityModel<User>> findUserAll() {
+        // Entity 각각의 출력할 데이터 설정
+        List<EntityModel<User>> userList = userService.findUserAll().stream()
+                .map(user -> EntityModel.of(user
+                        , linkTo(methodOn(UserController.class).findUser(user.getId())).withSelfRel()
+                        , linkTo(methodOn(UserController.class).findUserAll()).withRel("users")))
+                .collect(Collectors.toList());
+
+        // 전체 list의 출력할 데이터 설정
+        return CollectionModel.of(userList,
+                linkTo(methodOn(UserController.class).findUserAll()).withSelfRel());
     }
 
     @PostMapping("/user")
