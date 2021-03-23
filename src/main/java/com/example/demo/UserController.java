@@ -1,9 +1,6 @@
 package com.example.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -13,10 +10,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class UserController {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
+
+    public UserController(UserService userService, UserRepository userRepository) {
+        this.userService = userService;
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/")
     public String home() {
