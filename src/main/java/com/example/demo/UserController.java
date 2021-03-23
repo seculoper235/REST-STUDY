@@ -70,4 +70,14 @@ public class UserController {
 
         return ResponseEntity.created(createUri).body(newuser);
     }
+
+    @PutMapping("/user/{id}")
+    public EntityModel<User> updateUser(@RequestBody User user, @PathVariable Integer id) {
+        user.setId(id);
+        User result = userService.updateUser(user);
+
+        return EntityModel.of(result,
+                linkTo(methodOn(UserController.class).getUser(user.getId())).withSelfRel(),
+                linkTo(methodOn(UserController.class).findUserAll()).withRel("users"));
+    }
 }
