@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -71,6 +72,12 @@ public class UserController {
         return ResponseEntity.created(createUri).body(newuser);
     }
 
+    /* PUT과 DELETE?
+     * 두 메소드는 한국 인터넷 진흥원의 보안 가이드를 보면, GET/POST 외의 불필요한 메소드는 보안에 취약하니 사용하지 말라고 쓰여 있다.
+     * 하지만 실제로 꼭 필요해서 사용하는 메소드는 절대 불필요하지 않으므로, 사용에 대해선 논란이 많은 듯 하다.
+     * 우선 해당 레포지토리는 공부 목적이므로 RESTful을 충실히 이행하도록 한다.
+     * (하지만 DELETE 메소드는 정말 좋지 않으니, 절대 사용하지 않도록 한다!)
+     */
     @PutMapping("/user/{id}")
     public EntityModel<User> updateUser(@RequestBody User user, @PathVariable Integer id) {
         user.setId(id);
@@ -79,5 +86,17 @@ public class UserController {
         return EntityModel.of(result,
                 linkTo(methodOn(UserController.class).getUser(user.getId())).withSelfRel(),
                 linkTo(methodOn(UserController.class).findUserAll()).withRel("users"));
+    }
+
+    /* DELETE 메소드는 기본 차단되므로, POST 메소드로 변경한다.
+     * POST 메소드의 의가 생성 이외에도 리소스를 변경한다는 뜻도 있기에 의미적으로도 더 가깝고,
+     * 변경 이후의 Location도 제공하므로 더욱 적합하다.
+     * GET 메소드는 requestbody가 없다는 점에서 DELETE 메소드와 가장 흡사하나, 의미가 너무 동떨어지므로 적합하지 않다고 생각한다
+     */
+    @PostMapping("user/{id}/delete")
+    public ResponseEntity<Link> deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id);
+
+        return ResponseEntity.ok().body(linkTo(methodOn(UserController.class).findUserAll()).withRel("users"));
     }
 }
