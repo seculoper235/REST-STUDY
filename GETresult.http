@@ -1,6 +1,8 @@
 ### 단일 엔티티 조회
-GET http://localhost:8080/getuser/2
+GET http://localhost:8080/finduser/2
+Content-Type: application/json
 
 
 ### 전체 엔티티 조회
 GET http://localhost:8080/users
+Content-Type: application/json

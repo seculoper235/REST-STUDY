@@ -6,8 +6,6 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -38,15 +36,12 @@ public class UserController {
         return "<h1>Hello World!</h1>";
     }
 
-    @Transactional(readOnly = true)
     @GetMapping("/finduser/{id}")
     public ResponseEntity<User> findUser(@PathVariable Integer id) {
         User user = userService.findUserById(id);
-
         return ResponseEntity.ok(user);
     }
 
-    @Transactional(readOnly = true)
     @GetMapping("/getuser/{id}")
     public ResponseEntity<User> getUser(@PathVariable Integer id) {
         User user = userService.getUserById(id);
@@ -68,7 +63,6 @@ public class UserController {
                 linkTo(methodOn(UserController.class).findUserAll()).withSelfRel());
     }
 
-    @Transactional(readOnly = true)
     @PostMapping("/user")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User newuser = userService.createUser(user);
