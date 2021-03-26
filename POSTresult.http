@@ -3,8 +3,8 @@ POST http://localhost:8080/user
 Content-Type: application/json
 
 {
-  "name": "생성 테스트",
-  "description": "생성 테스트입니다."
+  "name": "생성 테스트3",
+  "description": "생성 테스트3입니다."
 }
 
 
