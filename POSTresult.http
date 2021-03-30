@@ -1,5 +1,5 @@
 ### 엔티티 하나 생성
-POST http://localhost:8080/user
+POST http://localhost:8080/users
 Content-Type: application/json
 
 {
@@ -10,5 +10,5 @@ Content-Type: application/json
 
 
 ### 엔티티 하나 삭제
-POST http://localhost:8080/user/1/delete
+POST http://localhost:8080/users/1/delete
 Content-Type: application/json
