@@ -17,7 +17,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    /* */
+    /* orElseThrow()?
+     * JPA의 findById() 메소드는 옵셔널 객체를 반환한다.
+     * 이 객체는 NULL 값 체크를 유용하게 할 수 있는 객체인데, 뒤따라 붙는 메소드로 처리한다.
+     * orElse(), orElseGet(), orElseThrow() 등 여러가지가 있는데, 이중 orElsehrow()는 파라미터로 지정한 예외를 던진다.
+     * 예외 클래스라면 어떤 것이든 가능하며, 다만 Supplier 형식으로 작성하여야 한다. */
     @Transactional(readOnly = true)
     public User findUserById(Integer id) {
         return userRepository.findById(id)
