@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -16,9 +17,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    /* */
     @Transactional(readOnly = true)
     public User findUserById(Integer id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id)
+                .orElseThrow(NullPointerException::new);
     }
 
     @Transactional(readOnly = true)

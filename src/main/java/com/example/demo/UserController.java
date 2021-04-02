@@ -5,7 +5,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +35,7 @@ public class UserController {
     }
 
     @GetMapping("{id}")
+    @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<EntityModel<User>> findUser(@PathVariable Integer id) {
         User user = userService.findUserById(id);
         return ResponseEntity.ok(userAssembler.toModel(user));
@@ -49,6 +49,7 @@ public class UserController {
     }
 
     @GetMapping
+    @ExceptionHandler(NullPointerException.class)
     public CollectionModel<EntityModel<User>> findUserAll() {
         // Entity 각각의 출력할 데이터 설정
         List<EntityModel<User>> userList = userService.findUserAll().stream()
