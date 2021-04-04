@@ -1,6 +1,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.Domain.User;
+import com.example.demo.Exception.ErrorCode;
 import com.example.demo.Exception.UserException;
 import com.example.demo.Repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,9 @@ public class UserService {
      * orElse(), orElseGet(), orElseThrow() 등 여러가지가 있는데, 이중 orElsehrow()는 파라미터로 지정한 예외를 던진다.
      * 예외 클래스라면 어떤 것이든 가능하며, 다만 Supplier 형식으로 작성하여야 한다. */
     @Transactional(readOnly = true)
-    public User findUserById(Integer id) {
+    public User findUserById(Integer id) throws UserException {
         return userRepository.findById(id)
-                .orElseThrow(NullPointerException::new);
+                .orElseThrow(() -> new UserException(ErrorCode.RESOURCE_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)

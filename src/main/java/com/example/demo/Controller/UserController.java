@@ -40,7 +40,7 @@ public class UserController {
 
     @GetMapping("{id}")
     @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<EntityModel<User>> findUser(@PathVariable Integer id) {
+    public ResponseEntity<EntityModel<User>> findUser(@PathVariable Integer id) throws UserException {
         User user = userService.findUserById(id);
         return ResponseEntity.ok(userAssembler.toModel(user));
     }
