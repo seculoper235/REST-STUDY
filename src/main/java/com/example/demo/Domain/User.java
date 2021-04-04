@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;

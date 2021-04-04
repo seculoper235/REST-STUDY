@@ -1,13 +1,12 @@
-package com.example.demo;
+package com.example.demo.Service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.Domain.User;
+import com.example.demo.Exception.UserException;
+import com.example.demo.Repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
