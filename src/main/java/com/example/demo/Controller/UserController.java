@@ -1,7 +1,6 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Controller.Assembler.UserAssembler;
-import com.example.demo.Exception.UserException;
 import com.example.demo.Domain.User;
 import com.example.demo.Service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  * consumes는 요청 헤더의 Conten-Type이 해당 미디어 타입과 일치할 때, 즉 올바른 타입일 경우만 매핑하고,
  * produces는 요청 헤더의 Accept에 해당 미디어 타입이 존재할 때, 즉 응답을 받을 수 있을 때 매핑이 된다
  */
-@RequestMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaTypes.HAL_JSON_VALUE)
+@RequestMapping(value = "/users"/*, consumes = MediaType.APPLICATION_JSON_VALUE*/, produces = MediaTypes.HAL_JSON_VALUE)
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -39,8 +38,7 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<EntityModel<User>> findUser(@PathVariable Integer id) throws UserException {
+    public ResponseEntity<EntityModel<User>> findUser(@PathVariable Integer id) {
         User user = userService.findUserById(id);
         return ResponseEntity.ok(userAssembler.toModel(user));
     }
