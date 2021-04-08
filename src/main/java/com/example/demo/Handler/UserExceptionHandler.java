@@ -2,7 +2,7 @@ package com.example.demo.Handler;
 
 import com.example.demo.Exception.ErrorCode;
 import com.example.demo.Exception.ExceptionResponse;
-import com.example.demo.Exception.UserException;
+import com.example.demo.Exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @ControllerAdvice
 @RestController
 public class UserExceptionHandler {
-    @ExceptionHandler(UserException.class)
-    public ResponseEntity<ExceptionResponse> handleUserException(UserException e) {
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleUserException(UserNotFoundException e) {
         ErrorCode errorCode = e.getErrorCode();
 
         ExceptionResponse response = ExceptionResponse.create()

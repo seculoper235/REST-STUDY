@@ -1,5 +1,5 @@
 ### 단일 엔티티 조회
-GET http://localhost:8080/users/3
+GET http://localhost:8080/users/15
 Content-Type: application/json
 
 

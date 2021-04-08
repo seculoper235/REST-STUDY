@@ -1,7 +1,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exception.UserException;
+import com.example.demo.Exception.UserNotFoundException;
 import com.example.demo.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public User findUserById(Integer id) {
         return userRepository.findById(id)
-                .orElseThrow(UserException::new);
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Transactional(readOnly = true)
@@ -56,6 +56,11 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Integer id) {
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        }
+        catch (Exception e) {
+            throw new UserNotFoundException();
+        }
     }
 }

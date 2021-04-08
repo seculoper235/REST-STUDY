@@ -90,7 +90,7 @@ public class UserController {
      * 변경 이후의 Location도 제공하므로 더욱 적합하다.
      * GET 메소드는 requestbody가 없다는 점에서 DELETE 메소드와 가장 흡사하나, 의미가 너무 동떨어지므로 적합하지 않다고 생각한다
      */
-    @PostMapping("{id}/delete")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<Link> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
 
