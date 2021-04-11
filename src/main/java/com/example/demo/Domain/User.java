@@ -26,7 +26,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(name = "team")
+@Table(name = "user")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,4 +35,8 @@ public class User {
     private String name;
 
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
 }
