@@ -36,6 +36,12 @@ public class User {
 
     private String description;
 
+    /* JSON 출력은 별개의 문제
+     * 그러나 레이지 로딩을 해도 런타임 에러가 나지 않는다 뿐이지, 여전히 순환 참조가 일어나서 데이터가 무한 반복되는 것을 볼 수 있다.
+     * 이건 JPA 설정을 잘못한 것이 아니라, 순전히 JSON의 문제이다.
+     * JSON은 앞서 말했다시피, 모든 속성을 출력하려고 한다. 레이지 로딩이고 뭐고 없다.
+     * 따라서 굳이 출력해주고 싶다면 역시 @JsonIgnore를 붙이면 된다.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
