@@ -3,7 +3,8 @@ package VO;
 import java.util.Objects;
 
 /* 기본적인 구성은 다음과 같고, 어떻게 활용하느냐에 따라 validation과 몇 가지 메소드가 구현될 수 있다.
-* 중요한 점은 불변성을 고려하여 신중히 작성해야 한다. 쓸데없는 메소드는 작성을 금한다. */
+* 중요한 점은 불변성을 고려하여 신중히 작성해야 한다. 쓸데없는 메소드는 작성을 금한다.
+* 또한 객체를 받아와야 하므로, 이것도 별도의 Repository가 필요하다. */
 public class UserVo {
     private final int id;
     private final String name;

@@ -25,6 +25,8 @@ import java.util.Objects;
 public class TeamVo {
     private final int id;
     private final String name;
+    // 출력에 카테고리별 멤버 수가 필요하므로, 필드를 추가하였다.
+    private final int count;
 
     @Override
     public boolean equals(Object obj) {
