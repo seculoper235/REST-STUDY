@@ -1,20 +1,22 @@
 package com.example.demo.Service;
 
+import VO.UserVo;
 import com.example.demo.Domain.User;
+import com.example.demo.Dto.UserResponse;
 import com.example.demo.Exception.UserNotFoundException;
 import com.example.demo.Repository.UserRepository;
+import com.example.demo.Repository.UserVoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    final UserVoRepository userVoRepository;
 
     /* orElseThrow()?
      * JPA의 findById() 메소드는 옵셔널 객체를 반환한다.
@@ -35,6 +37,17 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<User> findUserAll() {
         return userRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public UserResponse findUserVO(int id) {
+        UserVo userVo = userVoRepository.findUserVO(id);
+        return UserResponse.builder()
+                .id(userVo.getId())
+                .name(userVo.getName())
+                .description(userVo.getDescription())
+                .teamId(userVo.getTeamId())
+                .build();
     }
 
     /* 생성 작업에 readOnly = true를 하면 에러가 생기는 것 정상이다.

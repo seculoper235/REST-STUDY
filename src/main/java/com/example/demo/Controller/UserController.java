@@ -1,7 +1,9 @@
 package com.example.demo.Controller;
 
+import VO.UserVo;
 import com.example.demo.Controller.Assembler.UserAssembler;
 import com.example.demo.Domain.User;
+import com.example.demo.Dto.UserResponse;
 import com.example.demo.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
@@ -48,6 +50,13 @@ public class UserController {
         User user = userService.getUserById(id);
 
         return ResponseEntity.ok(userAssembler.toModel(user));
+    }
+
+    @GetMapping("/getuserVO/{id}")
+    public ResponseEntity<UserResponse> getUserVO(@PathVariable Integer id) {
+        UserResponse user = userService.findUserVO(id);
+
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping
