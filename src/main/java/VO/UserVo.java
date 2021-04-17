@@ -1,10 +1,13 @@
 package VO;
 
+import lombok.Getter;
+
 import java.util.Objects;
 
 /* 기본적인 구성은 다음과 같고, 어떻게 활용하느냐에 따라 validation과 몇 가지 메소드가 구현될 수 있다.
 * 중요한 점은 불변성을 고려하여 신중히 작성해야 한다. 쓸데없는 메소드는 작성을 금한다.
 * 또한 객체를 받아와야 하므로, 이것도 별도의 Repository가 필요하다. */
+@Getter
 public class UserVo {
     private final int id;
     private final String name;
@@ -18,10 +21,11 @@ public class UserVo {
      * 이를 위해 생성자를 만들어 객체를 사용하려면 반드시 생성자를 사용하게끔 한다.
      * (빌더 패턴이 훨씬 더 간편하지만, 설명용으로 작성)
      */
-    public UserVo(int id, String name, String description) {
+    public UserVo(int id, String name, String description, int teamId) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.teamId = teamId;
     }
 
     /* equals()는 동등성을 의미한다.
