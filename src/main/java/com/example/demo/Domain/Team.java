@@ -11,13 +11,11 @@ import java.util.List;
 /* team의 경우, 딱히 레이지 로딩을 사용하지 않기 때뮨에 JsonIgnoreProperties가 필요없다 */
 @Entity
 @Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Table(name = "team")
 public class Team {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
 
@@ -31,4 +29,19 @@ public class Team {
      */
     @OneToMany(mappedBy = "team")
     private List<User> users = new ArrayList<>();
+
+    /* Builder 사용 이유?
+     * 습관적으로 @Setter와 @AllArgsConstructor를 쓰는 것은 좋지 않다.
+     * @AllArgsConstructor를 사용하는 이유는 모든 필드를 초기화할 생성자를 만들기 위해서 이다.
+     * 이때 setter가 필요하므로 setter를 사용하는 것인데, 이렇게 되면 어노테이션이 너무 많아질 뿐더러, 생성자는 어떤 값을 변경했는지 파악하기가 힘들다.
+     * 이럴 때 Builder 패턴을 사용하면 매우 간편하다.
+     * 어떤 값을 변경하는지 직관적으로 알 수 있고, 초기화할 필드가 많아지면 많아질 수록 장점을 보이는 패턴이다.
+     * 게다가 @Setter와 @AllArgsConstructor를 사용하지 않으니, 보기에도 더 깔끔하다. 꼭 사용하도록 하자!
+     */
+    @Builder
+    public Team(int id, String name, List<User> users) {
+        this.id = id;
+        this.name = name;
+        this.users = users;
+    }
 }

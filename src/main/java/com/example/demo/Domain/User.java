@@ -22,15 +22,14 @@ import javax.persistence.*;
  */
 
 @Entity
-@Getter @Setter
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Table(name = "user")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String name;
 
@@ -45,4 +44,12 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
+
+    @Builder
+    public User(int id, String name, String description, Team team) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.team = team;
+    }
 }
