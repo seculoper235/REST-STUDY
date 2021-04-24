@@ -18,7 +18,7 @@ import lombok.Setter;
  */
 @Getter @Setter
 @Builder
-public class TeamResponse {
+public class TeamDto {
     private int id;
     private String name;
     private int count;
