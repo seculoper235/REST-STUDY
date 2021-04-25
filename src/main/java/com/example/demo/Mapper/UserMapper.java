@@ -15,7 +15,7 @@ import org.mapstruct.factory.Mappers;
  * 여기서는 MapStruct에 대해 살펴볼 것이다. ModelMapper가 작업 비용이 비싸기도하고 이슈도 많이 나오긴 하지만 여전히 많이 사용되고 있으므로
  * 때에 맞게 잘 선택해서 사용하면 될 것 같다.
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
     /* 1. 인터페이스 만들기
      * 우선 스프링은 해당 맵퍼 인터페이스를 구현하여 필요한 매핑 클래스를 만들어낸다
@@ -35,6 +35,9 @@ public interface UserMapper {
     /* 2. 다시 Entity로!
      * 다시 Entity로 매핑할 때는 거꾸로 다시 매핑할 필요가 없다.
      * InheritInverseConfiguration을 사용하여 동일한 과정을 역으로 반복할 수 있다. */
-    @InheritInverseConfiguration
+    /* 하지만 잘 생각해보자. 현재 입력값은 int형 id이므로, 이는 Entity의 team 필드의 id값에 들어가야한다.
+     * 따라서 위와같이 id값에 teamId가 들어가도록 설정해주자
+     */
+    @Mapping(target = "team.id", expression = "java(userDto.getTeamId())")
     User userDtoToUser(UserDto userDto);
 }
